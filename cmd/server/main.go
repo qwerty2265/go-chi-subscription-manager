@@ -5,22 +5,15 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
-	"github.com/qwerty2265/go-chi-subscription-manager/internal/common/db"
+	"github.com/qwerty2265/go-chi-subscription-manager/app"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("❌ Error loading .env file: %v", err)
-	}
-	log.Println("✅ .env file loaded successfully")
+	router := app.InitializeApp()
 	serverPort := os.Getenv("SERVER_PORT")
 
-	db.ConnectDB()
-
 	log.Printf("🚀 Server is running on port %v", serverPort)
-	if err := http.ListenAndServe(":"+serverPort, nil); err != nil {
+	if err := http.ListenAndServe(":"+serverPort, router); err != nil {
 		log.Fatalf("❌ The server failed to start: %v", err)
 	}
 }
