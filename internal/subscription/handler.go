@@ -27,11 +27,11 @@ func NewSubscriptionHandler(subscriptionService SubscriptionService) *Subscripti
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        subscription  body      Subscription  true  "Данные подписки"
+// @Param        subscription  body      SubscriptionCreateDTO  true  "Данные подписки"
 // @Success      201  {object}  common.Response
 // @Router       /api/subscriptions [post]
 func (h *SubscriptionHandler) CreateSubscription(w http.ResponseWriter, r *http.Request) error {
-	var subscription Subscription
+	var subscription SubscriptionCreateDTO
 	if err := json.NewDecoder(r.Body).Decode(&subscription); err != nil {
 		return err
 	}

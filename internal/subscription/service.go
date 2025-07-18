@@ -7,7 +7,7 @@ import (
 )
 
 type SubscriptionService interface {
-	CreateSubscription(subscription *Subscription) (*Subscription, error)
+	CreateSubscription(subscription *SubscriptionCreateDTO) (*Subscription, error)
 	GetAllSubscriptionsByUserID(userId uuid.UUID) ([]Subscription, error)
 	GetSubscriptionByID(id uuid.UUID) (*Subscription, error)
 	GetTotalPrice(userId uuid.UUID, serviceName string, from, to time.Time) (int, error)
@@ -25,11 +25,12 @@ func NewSubscriptionService(repo SubscriptionRepository) SubscriptionService {
 
 // -------------------------- service methods --------------------------
 
-func (s *subscriptionService) CreateSubscription(subscription *Subscription) (*Subscription, error) {
-	if err := subscription.Validate(); err != nil {
+func (s *subscriptionService) CreateSubscription(subscription *SubscriptionCreateDTO) (*Subscription, error) {
+	subscriptionModel := fromCreateDTOtoSubscription(subscription)
+	if err := subscriptionModel.Validate(); err != nil {
 		return nil, err
 	}
-	return s.repo.CreateSubscription(subscription)
+	return s.repo.CreateSubscription(subscriptionModel)
 }
 
 func (s *subscriptionService) GetAllSubscriptionsByUserID(userId uuid.UUID) ([]Subscription, error) {

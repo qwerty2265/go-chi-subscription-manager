@@ -65,7 +65,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/subscription.Subscription"
+                            "$ref": "#/definitions/subscription.SubscriptionCreateDTO"
                         }
                     }
                 ],
@@ -244,16 +244,10 @@ const docTemplate = `{
                 }
             }
         },
-        "subscription.Subscription": {
+        "subscription.SubscriptionCreateDTO": {
             "type": "object",
             "properties": {
-                "created_at": {
-                    "type": "string"
-                },
                 "end_date": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "price": {
@@ -263,9 +257,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "start_date": {
-                    "type": "string"
-                },
-                "updated_at": {
                     "type": "string"
                 },
                 "user_id": {
