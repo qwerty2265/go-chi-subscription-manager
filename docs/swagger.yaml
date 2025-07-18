@@ -1,0 +1,185 @@
+definitions:
+  common.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  subscription.Subscription:
+    properties:
+      created_at:
+        type: string
+      end_date:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  subscription.SubscriptionUpdateDTO:
+    properties:
+      end_date:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/subscriptions:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список всех подписок по user-id
+      parameters:
+      - description: ID пользователя
+        in: query
+        name: user-id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Получить все подписки пользователя
+      tags:
+      - subscriptions
+    post:
+      consumes:
+      - application/json
+      description: Создаёт новую запись о подписке
+      parameters:
+      - description: Данные подписки
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/subscription.Subscription'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Создать подписку
+      tags:
+      - subscriptions
+  /api/subscriptions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет подписку по её ID
+      parameters:
+      - description: ID подписки
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Удалить подписку
+      tags:
+      - subscriptions
+    get:
+      consumes:
+      - application/json
+      description: Возвращает одну подписку по её ID
+      parameters:
+      - description: ID подписки
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Получить подписку по ID
+      tags:
+      - subscriptions
+    put:
+      consumes:
+      - application/json
+      description: Обновляет данные существующей подписки
+      parameters:
+      - description: ID подписки
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Данные подписки
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/subscription.SubscriptionUpdateDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Обновить подписку
+      tags:
+      - subscriptions
+  /api/subscriptions/total-price:
+    get:
+      consumes:
+      - application/json
+      description: Считает сумму подписок пользователя за период
+      parameters:
+      - description: ID пользователя
+        in: query
+        name: user-id
+        required: true
+        type: string
+      - description: Название сервиса
+        in: query
+        name: service-name
+        type: string
+      - description: Дата начала (MM-YYYY)
+        in: query
+        name: from
+        type: string
+      - description: Дата окончания (MM-YYYY)
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Получить сумму подписок
+      tags:
+      - subscriptions
+swagger: "2.0"

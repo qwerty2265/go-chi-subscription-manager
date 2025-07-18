@@ -21,6 +21,15 @@ func NewSubscriptionHandler(subscriptionService SubscriptionService) *Subscripti
 
 // -------------------- handler methods ----------------
 
+// CreateSubscription godoc
+// @Summary      Создать подписку
+// @Description  Создаёт новую запись о подписке
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        subscription  body      Subscription  true  "Данные подписки"
+// @Success      201  {object}  common.Response
+// @Router       /api/subscriptions [post]
 func (h *SubscriptionHandler) CreateSubscription(w http.ResponseWriter, r *http.Request) error {
 	var subscription Subscription
 	if err := json.NewDecoder(r.Body).Decode(&subscription); err != nil {
@@ -44,6 +53,15 @@ func (h *SubscriptionHandler) CreateSubscription(w http.ResponseWriter, r *http.
 	return nil
 }
 
+// GetAllSubscriptionsByUserID godoc
+// @Summary      Получить все подписки пользователя
+// @Description  Возвращает список всех подписок по user-id
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        user-id  query     string  true  "ID пользователя"
+// @Success      200  {object}  common.Response
+// @Router       /api/subscriptions [get]
 func (h *SubscriptionHandler) GetAllSubscriptionsByUserID(w http.ResponseWriter, r *http.Request) error {
 	userIdStr := r.URL.Query().Get("user-id")
 	if userIdStr == "" {
@@ -70,6 +88,15 @@ func (h *SubscriptionHandler) GetAllSubscriptionsByUserID(w http.ResponseWriter,
 	return nil
 }
 
+// GetSubscriptionByID godoc
+// @Summary      Получить подписку по ID
+// @Description  Возвращает одну подписку по её ID
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "ID подписки"
+// @Success      200  {object}  common.Response
+// @Router       /api/subscriptions/{id} [get]
 func (h *SubscriptionHandler) GetSubscriptionByID(w http.ResponseWriter, r *http.Request) error {
 	idStr := chi.URLParam(r, "id")
 	if idStr == "" {
@@ -96,6 +123,18 @@ func (h *SubscriptionHandler) GetSubscriptionByID(w http.ResponseWriter, r *http
 	return nil
 }
 
+// GetTotalPrice godoc
+// @Summary      Получить сумму подписок
+// @Description  Считает сумму подписок пользователя за период
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        user-id      query     string  true  "ID пользователя"
+// @Param        service-name query     string  false "Название сервиса"
+// @Param        from         query     string  false "Дата начала (MM-YYYY)"
+// @Param        to           query     string  false "Дата окончания (MM-YYYY)"
+// @Success      200  {object}  common.Response
+// @Router       /api/subscriptions/total-price [get]
 func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Request) error {
 	userIdStr := r.URL.Query().Get("user-id")
 	serviceName := r.URL.Query().Get("service-name")
@@ -145,6 +184,16 @@ func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Reque
 	return nil
 }
 
+// UpdateSubscription godoc
+// @Summary      Обновить подписку
+// @Description  Обновляет данные существующей подписки
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        id    path      string   true  "ID подписки"
+// @Param        subscription  body      SubscriptionUpdateDTO  true  "Данные подписки"
+// @Success      200  {object}  common.Response
+// @Router       /api/subscriptions/{id} [put]
 func (h *SubscriptionHandler) UpdateSubscription(w http.ResponseWriter, r *http.Request) error {
 	idStr := chi.URLParam(r, "id")
 	if idStr == "" {
@@ -177,6 +226,15 @@ func (h *SubscriptionHandler) UpdateSubscription(w http.ResponseWriter, r *http.
 	return nil
 }
 
+// DeleteSubscriptionByID godoc
+// @Summary      Удалить подписку
+// @Description  Удаляет подписку по её ID
+// @Tags         subscriptions
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "ID подписки"
+// @Success      200  {object}  common.Response
+// @Router       /api/subscriptions/{id} [delete]
 func (h *SubscriptionHandler) DeleteSubscriptionByID(w http.ResponseWriter, r *http.Request) error {
 	idStr := chi.URLParam(r, "id")
 	if idStr == "" {
