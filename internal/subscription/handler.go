@@ -146,12 +146,22 @@ func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Reque
 }
 
 func (h *SubscriptionHandler) UpdateSubscription(w http.ResponseWriter, r *http.Request) error {
-	var subscription Subscription
+	idStr := chi.URLParam(r, "id")
+	if idStr == "" {
+		return errors.New("subscription ID is required")
+	}
+
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		return errors.New("invalid subscription ID format")
+	}
+
+	var subscription SubscriptionUpdateDTO
 	if err := json.NewDecoder(r.Body).Decode(&subscription); err != nil {
 		return err
 	}
 
-	updatedSubscription, err := h.subscriptionService.UpdateSubscription(&subscription)
+	updatedSubscription, err := h.subscriptionService.UpdateSubscription(id, &subscription)
 	if err != nil {
 		return err
 	}

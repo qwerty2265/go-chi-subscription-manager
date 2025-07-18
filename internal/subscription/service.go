@@ -11,7 +11,7 @@ type SubscriptionService interface {
 	GetAllSubscriptionsByUserID(userId uuid.UUID) ([]Subscription, error)
 	GetSubscriptionByID(id uuid.UUID) (*Subscription, error)
 	GetTotalPrice(userId uuid.UUID, serviceName string, from, to time.Time) (int, error)
-	UpdateSubscription(subscription *Subscription) (*Subscription, error)
+	UpdateSubscription(id uuid.UUID, subscription *SubscriptionUpdateDTO) (*Subscription, error)
 	DeleteSubscriptionByID(id uuid.UUID) error
 }
 
@@ -44,11 +44,22 @@ func (s *subscriptionService) GetTotalPrice(userId uuid.UUID, serviceName string
 	return s.repo.GetTotalPrice(userId, serviceName, from, to)
 }
 
-func (s *subscriptionService) UpdateSubscription(subscription *Subscription) (*Subscription, error) {
-	if err := subscription.Validate(); err != nil {
+func (s *subscriptionService) UpdateSubscription(id uuid.UUID, subscription *SubscriptionUpdateDTO) (*Subscription, error) {
+	existing, err := s.repo.GetSubscriptionByID(id)
+	if err != nil {
 		return nil, err
 	}
-	return s.repo.UpdateSubscription(subscription)
+
+	existing.UpdateFields(*subscription)
+	if err := existing.Validate(); err != nil {
+		return nil, err
+	}
+
+	updatedSubscription, err := s.repo.UpdateSubscription(existing)
+	if err != nil {
+		return nil, err
+	}
+	return updatedSubscription, nil
 }
 
 func (s *subscriptionService) DeleteSubscriptionByID(id uuid.UUID) error {
