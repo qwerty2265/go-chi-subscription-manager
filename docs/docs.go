@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/api/subscriptions": {
             "get": {
-                "description": "Возвращает список всех подписок по user-id",
+                "description": "Returns a list of all subscriptions by user-id",
                 "consumes": [
                     "application/json"
                 ],
@@ -27,11 +27,11 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Получить все подписки пользователя",
+                "summary": "Get all user subscriptions",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID пользователя",
+                        "description": "User ID",
                         "name": "user-id",
                         "in": "query",
                         "required": true
@@ -47,7 +47,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Создаёт новую запись о подписке",
+                "description": "Creates a new subscription record",
                 "consumes": [
                     "application/json"
                 ],
@@ -57,10 +57,10 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Создать подписку",
+                "summary": "Create subscription",
                 "parameters": [
                     {
-                        "description": "Данные подписки",
+                        "description": "Subscription data",
                         "name": "subscription",
                         "in": "body",
                         "required": true,
@@ -81,7 +81,7 @@ const docTemplate = `{
         },
         "/api/subscriptions/total-price": {
             "get": {
-                "description": "Считает сумму подписок пользователя за период",
+                "description": "Calculates the total price of user subscriptions for a period",
                 "consumes": [
                     "application/json"
                 ],
@@ -91,30 +91,30 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Получить сумму подписок",
+                "summary": "Get total subscription price",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID пользователя",
+                        "description": "User ID",
                         "name": "user-id",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "Название сервиса",
+                        "description": "Service name",
                         "name": "service-name",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Дата начала (MM-YYYY)",
+                        "description": "Start date (MM-YYYY)",
                         "name": "from",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Дата окончания (MM-YYYY)",
+                        "description": "End date (MM-YYYY)",
                         "name": "to",
                         "in": "query"
                     }
@@ -131,7 +131,7 @@ const docTemplate = `{
         },
         "/api/subscriptions/{id}": {
             "get": {
-                "description": "Возвращает одну подписку по её ID",
+                "description": "Returns a subscription by its ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -141,11 +141,11 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Получить подписку по ID",
+                "summary": "Get subscription by ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID подписки",
+                        "description": "Subscription ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -161,7 +161,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Обновляет данные существующей подписки",
+                "description": "Updates an existing subscription",
                 "consumes": [
                     "application/json"
                 ],
@@ -171,17 +171,17 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Обновить подписку",
+                "summary": "Update subscription",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID подписки",
+                        "description": "Subscription ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Данные подписки",
+                        "description": "Subscription data",
                         "name": "subscription",
                         "in": "body",
                         "required": true,
@@ -200,7 +200,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Удаляет подписку по её ID",
+                "description": "Deletes a subscription by its ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -210,11 +210,11 @@ const docTemplate = `{
                 "tags": [
                     "subscriptions"
                 ],
-                "summary": "Удалить подписку",
+                "summary": "Delete subscription",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID подписки",
+                        "description": "Subscription ID",
                         "name": "id",
                         "in": "path",
                         "required": true

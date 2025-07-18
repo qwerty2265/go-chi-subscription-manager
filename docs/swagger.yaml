@@ -38,9 +38,9 @@ paths:
     get:
       consumes:
       - application/json
-      description: Возвращает список всех подписок по user-id
+      description: Returns a list of all subscriptions by user-id
       parameters:
-      - description: ID пользователя
+      - description: User ID
         in: query
         name: user-id
         required: true
@@ -52,15 +52,15 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Получить все подписки пользователя
+      summary: Get all user subscriptions
       tags:
       - subscriptions
     post:
       consumes:
       - application/json
-      description: Создаёт новую запись о подписке
+      description: Creates a new subscription record
       parameters:
-      - description: Данные подписки
+      - description: Subscription data
         in: body
         name: subscription
         required: true
@@ -73,16 +73,16 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Создать подписку
+      summary: Create subscription
       tags:
       - subscriptions
   /api/subscriptions/{id}:
     delete:
       consumes:
       - application/json
-      description: Удаляет подписку по её ID
+      description: Deletes a subscription by its ID
       parameters:
-      - description: ID подписки
+      - description: Subscription ID
         in: path
         name: id
         required: true
@@ -94,15 +94,15 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Удалить подписку
+      summary: Delete subscription
       tags:
       - subscriptions
     get:
       consumes:
       - application/json
-      description: Возвращает одну подписку по её ID
+      description: Returns a subscription by its ID
       parameters:
-      - description: ID подписки
+      - description: Subscription ID
         in: path
         name: id
         required: true
@@ -114,20 +114,20 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Получить подписку по ID
+      summary: Get subscription by ID
       tags:
       - subscriptions
     put:
       consumes:
       - application/json
-      description: Обновляет данные существующей подписки
+      description: Updates an existing subscription
       parameters:
-      - description: ID подписки
+      - description: Subscription ID
         in: path
         name: id
         required: true
         type: string
-      - description: Данные подписки
+      - description: Subscription data
         in: body
         name: subscription
         required: true
@@ -140,29 +140,29 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Обновить подписку
+      summary: Update subscription
       tags:
       - subscriptions
   /api/subscriptions/total-price:
     get:
       consumes:
       - application/json
-      description: Считает сумму подписок пользователя за период
+      description: Calculates the total price of user subscriptions for a period
       parameters:
-      - description: ID пользователя
+      - description: User ID
         in: query
         name: user-id
         required: true
         type: string
-      - description: Название сервиса
+      - description: Service name
         in: query
         name: service-name
         type: string
-      - description: Дата начала (MM-YYYY)
+      - description: Start date (MM-YYYY)
         in: query
         name: from
         type: string
-      - description: Дата окончания (MM-YYYY)
+      - description: End date (MM-YYYY)
         in: query
         name: to
         type: string
@@ -173,7 +173,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Получить сумму подписок
+      summary: Get total subscription price
       tags:
       - subscriptions
 swagger: "2.0"

@@ -22,12 +22,12 @@ func NewSubscriptionHandler(subscriptionService SubscriptionService) *Subscripti
 // -------------------- handler methods ----------------
 
 // CreateSubscription godoc
-// @Summary      Создать подписку
-// @Description  Создаёт новую запись о подписке
+// @Summary      Create subscription
+// @Description  Creates a new subscription record
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        subscription  body      SubscriptionCreateDTO  true  "Данные подписки"
+// @Param        subscription  body      SubscriptionCreateDTO  true  "Subscription data"
 // @Success      201  {object}  common.Response
 // @Router       /api/subscriptions [post]
 func (h *SubscriptionHandler) CreateSubscription(w http.ResponseWriter, r *http.Request) error {
@@ -54,12 +54,12 @@ func (h *SubscriptionHandler) CreateSubscription(w http.ResponseWriter, r *http.
 }
 
 // GetAllSubscriptionsByUserID godoc
-// @Summary      Получить все подписки пользователя
-// @Description  Возвращает список всех подписок по user-id
+// @Summary      Get all user subscriptions
+// @Description  Returns a list of all subscriptions by user-id
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        user-id  query     string  true  "ID пользователя"
+// @Param        user-id  query     string  true  "User ID"
 // @Success      200  {object}  common.Response
 // @Router       /api/subscriptions [get]
 func (h *SubscriptionHandler) GetAllSubscriptionsByUserID(w http.ResponseWriter, r *http.Request) error {
@@ -89,12 +89,12 @@ func (h *SubscriptionHandler) GetAllSubscriptionsByUserID(w http.ResponseWriter,
 }
 
 // GetSubscriptionByID godoc
-// @Summary      Получить подписку по ID
-// @Description  Возвращает одну подписку по её ID
+// @Summary      Get subscription by ID
+// @Description  Returns a subscription by its ID
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        id   path      string  true  "ID подписки"
+// @Param        id   path      string  true  "Subscription ID"
 // @Success      200  {object}  common.Response
 // @Router       /api/subscriptions/{id} [get]
 func (h *SubscriptionHandler) GetSubscriptionByID(w http.ResponseWriter, r *http.Request) error {
@@ -124,15 +124,15 @@ func (h *SubscriptionHandler) GetSubscriptionByID(w http.ResponseWriter, r *http
 }
 
 // GetTotalPrice godoc
-// @Summary      Получить сумму подписок
-// @Description  Считает сумму подписок пользователя за период
+// @Summary      Get total subscription price
+// @Description  Calculates the total price of user subscriptions for a period
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        user-id      query     string  true  "ID пользователя"
-// @Param        service-name query     string  false "Название сервиса"
-// @Param        from         query     string  false "Дата начала (MM-YYYY)"
-// @Param        to           query     string  false "Дата окончания (MM-YYYY)"
+// @Param        user-id      query     string  true  "User ID"
+// @Param        service-name query     string  false "Service name"
+// @Param        from         query     string  false "Start date (MM-YYYY)"
+// @Param        to           query     string  false "End date (MM-YYYY)"
 // @Success      200  {object}  common.Response
 // @Router       /api/subscriptions/total-price [get]
 func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Request) error {
@@ -185,13 +185,13 @@ func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Reque
 }
 
 // UpdateSubscription godoc
-// @Summary      Обновить подписку
-// @Description  Обновляет данные существующей подписки
+// @Summary      Update subscription
+// @Description  Updates an existing subscription
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        id    path      string   true  "ID подписки"
-// @Param        subscription  body      SubscriptionUpdateDTO  true  "Данные подписки"
+// @Param        id    path      string   true  "Subscription ID"
+// @Param        subscription  body      SubscriptionUpdateDTO  true  "Subscription data"
 // @Success      200  {object}  common.Response
 // @Router       /api/subscriptions/{id} [put]
 func (h *SubscriptionHandler) UpdateSubscription(w http.ResponseWriter, r *http.Request) error {
@@ -227,12 +227,12 @@ func (h *SubscriptionHandler) UpdateSubscription(w http.ResponseWriter, r *http.
 }
 
 // DeleteSubscriptionByID godoc
-// @Summary      Удалить подписку
-// @Description  Удаляет подписку по её ID
+// @Summary      Delete subscription
+// @Description  Deletes a subscription by its ID
 // @Tags         subscriptions
 // @Accept       json
 // @Produce      json
-// @Param        id   path      string  true  "ID подписки"
+// @Param        id   path      string  true  "Subscription ID"
 // @Success      200  {object}  common.Response
 // @Router       /api/subscriptions/{id} [delete]
 func (h *SubscriptionHandler) DeleteSubscriptionByID(w http.ResponseWriter, r *http.Request) error {
