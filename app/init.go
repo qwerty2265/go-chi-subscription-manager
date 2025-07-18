@@ -17,6 +17,7 @@ func InitializeApp() chi.Router {
 	log.Println("✅ .env file loaded successfully")
 
 	database := db.ConnectDB()
+	db.Migrate(database)
 
 	subRepo := subscription.NewSubscriptionRepository(database)
 	subService := subscription.NewSubscriptionService(subRepo)
