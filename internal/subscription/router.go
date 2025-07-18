@@ -11,6 +11,7 @@ func SubscriptionRouter(subscriptionHandler SubscriptionHandler) chi.Router {
 	r.Post("/create", middleware.ErrorWrapper(subscriptionHandler.CreateSubscription))
 	r.Get("/{id}", middleware.ErrorWrapper(subscriptionHandler.GetSubscriptionByID))
 	r.Get("/", middleware.ErrorWrapper(subscriptionHandler.GetAllSubscriptionsByUserID))
+	r.Get("/total-price", middleware.ErrorWrapper(subscriptionHandler.GetTotalPrice))
 	r.Put("/{id}", middleware.ErrorWrapper(subscriptionHandler.UpdateSubscription))
 	r.Delete("/{id}", middleware.ErrorWrapper(subscriptionHandler.DeleteSubscriptionByID))
 

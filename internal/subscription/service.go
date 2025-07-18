@@ -1,11 +1,16 @@
 package subscription
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type SubscriptionService interface {
 	CreateSubscription(subscription *Subscription) (*Subscription, error)
 	GetAllSubscriptionsByUserID(userId uuid.UUID) ([]Subscription, error)
 	GetSubscriptionByID(id uuid.UUID) (*Subscription, error)
+	GetTotalPrice(userId uuid.UUID, serviceName string, from, to time.Time) (int, error)
 	UpdateSubscription(subscription *Subscription) (*Subscription, error)
 	DeleteSubscriptionByID(id uuid.UUID) error
 }
@@ -21,6 +26,9 @@ func NewSubscriptionService(repo SubscriptionRepository) SubscriptionService {
 // -------------------------- service methods --------------------------
 
 func (s *subscriptionService) CreateSubscription(subscription *Subscription) (*Subscription, error) {
+	if err := subscription.Validate(); err != nil {
+		return nil, err
+	}
 	return s.repo.CreateSubscription(subscription)
 }
 
@@ -32,7 +40,14 @@ func (s *subscriptionService) GetSubscriptionByID(id uuid.UUID) (*Subscription, 
 	return s.repo.GetSubscriptionByID(id)
 }
 
+func (s *subscriptionService) GetTotalPrice(userId uuid.UUID, serviceName string, from, to time.Time) (int, error) {
+	return s.repo.GetTotalPrice(userId, serviceName, from, to)
+}
+
 func (s *subscriptionService) UpdateSubscription(subscription *Subscription) (*Subscription, error) {
+	if err := subscription.Validate(); err != nil {
+		return nil, err
+	}
 	return s.repo.UpdateSubscription(subscription)
 }
 

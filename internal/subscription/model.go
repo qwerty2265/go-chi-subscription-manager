@@ -1,35 +1,30 @@
 package subscription
 
 import (
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
 )
 
 type Subscription struct {
-	ID          uuid.UUID  `gorm:"type:uuid;default:uuid_generate_v4();primaryKey" json:"id"`
+	ID          uuid.UUID  `gorm:"type:uuid;default:gen_random_uuid()" json:"id"`
 	ServiceName string     `gorm:"not null" json:"service_name"`
 	Price       int        `gorm:"not null" json:"price"`
 	UserID      uuid.UUID  `gorm:"type:uuid;not null" json:"user_id"`
-	StartDate   time.Time  `gorm:"not null" json:"start_date"`
-	EndDate     *time.Time `json:"end_date,omitempty"`
+	StartDate   MonthYear  `gorm:"not null" json:"start_date"`
+	EndDate     *MonthYear `json:"end_date,omitempty"`
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 }
 
-func (s *Subscription) UpdateFields(updatedData Subscription) error {
-	if updatedData.ServiceName != "" {
-		s.ServiceName = updatedData.ServiceName
+func (s *Subscription) Validate() (err error) {
+	if s.EndDate != nil && s.EndDate.ToTime().Before(s.StartDate.ToTime()) {
+		return errors.New("end date cannot be before start date")
 	}
-	if updatedData.Price > 0 {
-		s.Price = updatedData.Price
+
+	if s.Price < 0 {
+		return errors.New("price cannot be negative")
 	}
-	if !updatedData.StartDate.IsZero() {
-		s.StartDate = updatedData.StartDate
-	}
-	if updatedData.EndDate != nil {
-		s.EndDate = updatedData.EndDate
-	}
-	s.UpdatedAt = time.Now()
 	return nil
 }

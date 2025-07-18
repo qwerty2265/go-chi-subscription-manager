@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
@@ -88,6 +89,55 @@ func (h *SubscriptionHandler) GetSubscriptionByID(w http.ResponseWriter, r *http
 	response := common.Response{
 		Success: true,
 		Data:    subscription,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+	return nil
+}
+
+func (h *SubscriptionHandler) GetTotalPrice(w http.ResponseWriter, r *http.Request) error {
+	userIdStr := r.URL.Query().Get("user-id")
+	serviceName := r.URL.Query().Get("service-name")
+	fromStr := r.URL.Query().Get("from")
+	toStr := r.URL.Query().Get("to")
+
+	var userId uuid.UUID
+	if userIdStr == "" {
+		return errors.New("user-id query parameter is required")
+	}
+
+	userId, err := uuid.Parse(userIdStr)
+	if err != nil {
+		return errors.New("invalid user-id format")
+	}
+
+	var from, to time.Time
+	if fromStr != "" {
+		t, err := time.Parse(monthYearLayout, fromStr)
+		if err != nil {
+			return errors.New("invalid from date format")
+		}
+		from = t
+	}
+
+	if toStr != "" {
+		t, err := time.Parse(monthYearLayout, toStr)
+		if err != nil {
+			return errors.New("invalid to date format")
+		}
+		to = t
+	}
+
+	totalPrice, err := h.subscriptionService.GetTotalPrice(userId, serviceName, from, to)
+	if err != nil {
+		return err
+	}
+
+	response := common.Response{
+		Success: true,
+		Data:    totalPrice,
+		Message: "total price calculated",
 	}
 
 	w.Header().Set("Content-Type", "application/json")
